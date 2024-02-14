@@ -1,8 +1,8 @@
 import express from "express";
 import bodyParser from "body-parser";
-import monstersRoute from "./routes/monster.route.js";
 import { connectDB } from "./database/database.js";
 
+const app = express();
 const port = 8000;
 
 connectDB();
