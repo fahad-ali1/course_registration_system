@@ -1,0 +1,20 @@
+[
+    {
+      "studentID": 1,
+      "name": "Jame Deez",
+      "email": "jame@example.com",
+      "registeredCourses": [1, 2]
+    },
+    {
+      "studentID": 2,
+      "name": "Alice Jonathan",
+      "email": "alice@example.com",
+      "registeredCourses": [2, 3]
+    },
+    {
+      "studentID": 3,
+      "name": "Trey Got",
+      "email": "trey@example.com",
+      "registeredCourses": [3, 4]
+    }
+]

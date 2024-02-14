@@ -1,0 +1,44 @@
+[
+    {
+      "courseID": 1,
+      "courseName": "CMPT 315",
+      "department": "Introduction to Databases",
+      "timeOfDay": "09:00"
+    },
+    {
+      "courseID": 2,
+      "courseName": "MATH 102",
+      "department": "Algebra",
+      "timeOfDay": "10:30"
+    },
+    {
+      "courseID": 3,
+      "courseName": "ENGL 103",
+      "department": "English",
+      "timeOfDay": "13:00"
+    },
+    {
+      "courseID": 4,
+      "courseName": "CMPT 350",
+      "department": "Software Engineering",
+      "timeOfDay": "17:00"
+    },
+    {
+      "courseID": 5,
+      "courseName": "CMPT 103",
+      "department": "Introduction to Programming",
+      "timeOfDay": "09:30"
+    },
+    {
+      "courseID": 6,
+      "courseName": "PSYC 104",
+      "department": "Introduction to Psychology",
+      "timeOfDay": "14:30"
+    },
+    {
+      "courseID": 7,
+      "courseName": "PHYS 400",
+      "department": "Quantum Mechanics",
+      "timeOfDay": "18:30"
+    }
+]
