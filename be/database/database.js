@@ -10,7 +10,7 @@ export const connectDB = async () => {
   const dataBase = process.env.dataBase;
 
   // For local development, uncomment line 13 and comment out line 14
-  const url = `mongodb://localhost:27017/course`;
+  const url = `mongodb://localhost:27017/course_register`;
   //const url = `mongodb+srv://${dbNAME}:${dbPASSWORD}@${dbCLUSTER}/${dataBase}`;
 
   try {

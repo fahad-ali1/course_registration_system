@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import route from "./routes/route.js"
 import { connectDB } from "./database/database.js";
 
 const app = express();
@@ -13,7 +14,7 @@ connectDB();
     app.use(bodyParser.json());
 
     // routes
-    app.use("/", monstersRoute);
+    app.use("/", route);
 
     app.listen(port, function () {
       console.log(`🚀 Fire app listening on port ${port}!`);
