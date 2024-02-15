@@ -79,3 +79,12 @@ tr:hover td {
     width: 35%;
     text-align: center;
 }
+
+.error {
+    background-color: rgb(255, 214, 214);
+    border: 1px solid rgb(255, 141, 141);
+    color: rgb(156, 0, 0);
+    padding: 12px;
+    margin-bottom: 16px;
+    border-radius: 4px;
+  }
