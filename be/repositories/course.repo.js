@@ -1,4 +1,3 @@
-import Student from "../models/student.model.js";
 import Course from "../models/course.model.js";
 
 export const getAllCoursesFromRepo = async (query) => {
@@ -7,6 +6,15 @@ export const getAllCoursesFromRepo = async (query) => {
         return courses;
     } catch (e) {
         throw Error("Error while fetching courses!");
+    }
+}
+
+export const getCourseFromRepo = async (query) => {
+    try {
+        const course = await Course.findOne(query);
+        return course;
+    } catch (e) {
+        throw Error("Error while fetching course!");
     }
 }
 

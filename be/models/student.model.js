@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
 
 const studentSchema = new mongoose.Schema({
-  studentId: { type: Number, required: true, unique: true },
+  studentID: { type: Number, required: true },
   name: { type: String, required: true },
-  email: { type: String, required: true, unique: true }
+  email: { type: String, required: true, unique: true },
+  registeredCourses: []
 });
 
 const Student = mongoose.model("Student", studentSchema);
