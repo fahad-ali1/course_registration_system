@@ -66,7 +66,3 @@ export const unregisterCourse = async (req, res) => {
       handleError(res, 500, `Failed to register course: ${e.message}`)
     }
 }
-
-export const getRegisteredCourses = async (req, res) => {
-  const { studentID } = req.params;
-}

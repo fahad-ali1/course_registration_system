@@ -1,4 +1,4 @@
-import { getAllStudentsFromRepo, getStudentFromRepo } from '../repositories/student.repo.js';
+import { getAllStudentsFromRepo, getStudentFromRepo, getRegisteredCoursesFromRepo } from '../repositories/student.repo.js';
 
 // Handle student not found
 const handleStudentNotFound = (res, studentID) => {
@@ -33,4 +33,14 @@ export const getStudent = async (req, res) => {
     } catch (e) {
         handleError(res, 500, `Failed to fetch student ${studentID}: ${e.message}`);
     }
-};
+}
+
+export const getRegisteredCourses = async (req, res) => {
+    const { studentID } = req.params;
+    try {
+        const registeredCourses = await getRegisteredCoursesFromRepo(studentID);
+        res.status(200).send(registeredCourses);
+    } catch (e) {
+        handleError(res, 500, `Failed to fetch registered course(s: ${e.message}`);
+    }
+}
