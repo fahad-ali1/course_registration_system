@@ -39,6 +39,16 @@ function App() {
     ));
   };
 
+  const handleEnrollButton = (courseID) => {
+    // testing
+    console.log(courseID + "  enroll")
+  }
+
+  const handleUnenrollButton = (courseID) => {
+    // testing
+    console.log(courseID + "   unenroll")
+  }
+
   const renderCourses = () => {
     return courses.map((course) => (
       <tr key={course.courseID}>
@@ -46,7 +56,10 @@ function App() {
         <td>{course.courseName}</td>
         <td>{course.department}</td>
         <td>{course.timeOfDay}</td>
-        <td><button className='enroll'>Enroll</button></td>
+        <td>
+          <button className='enroll' onClick={() => handleEnrollButton(course.courseID)}>
+          Enroll</button>
+          </td>
       </tr>
     ));
   }
@@ -65,7 +78,9 @@ function App() {
           <td>{course.courseName}</td>
           <td>{course.department}</td>
           <td>{course.timeOfDay}</td>
-          <td><button className='unenroll'>Unenroll</button></td>
+          <td><button className='unenroll' onClick={() => handleUnenrollButton(course.courseID)}>
+            Unenroll</button>
+            </td>
         </tr>
       );
     });
@@ -97,48 +112,50 @@ function App() {
   };  
 
   return (
-    <div className="homePage">
-
+    <div>
       {/* Course Info Table */}
-      <h1>Course Information</h1>
+      <div className='registerCourse'>
+        <h1>Course Information</h1>
 
-      <select className='studentRegisterMenu' value={selectedStudentRegister} onChange={handleStudentRegister}>
-        <option value="">Select Student to Enroll</option>
-        {renderStudentSelectDropDown()}
-      </select>
-
-      {selectedStudentRegister && (
-        <table className='course'>
-          <thead>
-            {renderRegisterTableColumns()}
-          </thead>
-          <tbody>
-            {renderCourses()}
-          </tbody>
-        </table>
-      )}
-
+        <select className='studentRegisterMenu' value={selectedStudentRegister} onChange={handleStudentRegister}>
+          <option value="">Select Student to Enroll</option>
+          {renderStudentSelectDropDown()}
+        </select>
+  
+        {selectedStudentRegister && (
+          <table className='courseRegisterTable'>
+            <thead>
+              {renderRegisterTableColumns()}
+            </thead>
+            <tbody>
+              {renderCourses()}
+            </tbody>
+          </table>
+        )}
+      </div>
+  
       {/* Student Info Table */}
-
-      <h1>Registered Student Information</h1>
-
-      <select className='studentRegisteredMenu' value={selectedStudentRegistered} onChange={handleStudentRegistered}>
-        <option value="">Select to View Registered Courses</option>
-        {renderStudentSelectDropDown()}
-      </select>
-
-      {selectedStudentRegistered && (
-        <table className='student'>
-          <thead>
-            {renderRegisteredTableColumns()}
-          </thead>
-          <tbody>
-            {renderRegisteredCourses()}
-          </tbody>
-        </table>
-      )}
+      <div className='registeredCourses'>
+        <h1>Registered Student Information</h1>
+  
+        <select className='studentRegisteredMenu' value={selectedStudentRegistered} onChange={handleStudentRegistered}>
+          <option value="">Select to View Registered Courses</option>
+          {renderStudentSelectDropDown()}
+        </select>
+  
+        {selectedStudentRegistered && (
+          <table className='studentRegisteredTable'>
+            <thead>
+              {renderRegisteredTableColumns()}
+            </thead>
+            <tbody>
+              {renderRegisteredCourses()}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
-  )
-};
+  );  
+}
 
 export default App;
