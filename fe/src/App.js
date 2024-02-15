@@ -5,8 +5,9 @@ import './App.css';
 function App() {
   const [students, setStudents] = useState([]);
   const [courses, setCourses] = useState([]);
-  const [selectedStudentRegistered, setSelectedStudentRegisteredView] = useState('');
+  const [selectedStudentRegistered, setSelectedStudentRegisteredView] = useState('1');
   const [selectedStudentRegister, setSelectedStudentRegisterView] = useState('');
+  const [error, setError] = useState('');
 
   // Fetch students and courses from database
   useEffect(() => {
@@ -17,7 +18,7 @@ function App() {
         setStudents(studentsResponse.data);
         setCourses(coursesResponse.data);
       } catch (error) {
-        console.log(error);
+        setError(error)
       }
     };
     fetchData();
@@ -39,14 +40,54 @@ function App() {
     ));
   };
 
-  const handleEnrollButton = (courseID) => {
-    // testing
-    console.log(courseID + "  enroll")
-  }
+  const handleEnrollButton = async (courseID) => {
+    const selectedStudentID = parseInt(selectedStudentRegister);
 
-  const handleUnenrollButton = (courseID) => {
-    // testing
-    console.log(courseID + "   unenroll")
+    if (selectedStudentRegister === '') {
+      setError("Please select a student first");
+      window.scrollTo(0, 0);
+      
+    }else{setError('')
+
+      try {
+        await axios.post(`http://localhost:8000/students/${selectedStudentID}/courses/${courseID}/enroll`);
+
+        // Update the state after enrollment
+        const updatedStudentsResponse = await axios.get('http://localhost:8000/students');
+        const updatedCoursesResponse = await axios.get('http://localhost:8000/courses');
+        setStudents(updatedStudentsResponse.data);
+        setCourses(updatedCoursesResponse.data);
+      } catch (error) {
+          setError("Error enrolling student: " + error.response.data);
+          window.scrollTo(0, 0);
+      }
+    }
+  } 
+
+  const handleUnenrollButton = async (courseID) => {
+    const selectedStudentID = parseInt(selectedStudentRegistered);
+
+    if (selectedStudentRegistered === '') {
+      setError("Please select a student first");
+      window.scrollTo(0, 0);
+
+    }else{setError('')
+
+      try {
+        
+        await axios.post(`http://localhost:8000/students/${selectedStudentID}/courses/${courseID}/unenroll`);
+        
+        // Update the state after unenrollment
+        const updatedStudentsResponse = await axios.get('http://localhost:8000/students');
+        const updatedCoursesResponse = await axios.get('http://localhost:8000/courses');
+        setStudents(updatedStudentsResponse.data);
+        setCourses(updatedCoursesResponse.data);
+
+      } catch (error) {
+          setError("Error unenrolling student: " + error.response.data);
+          window.scrollTo(0, 0);
+      }
+    }
   }
 
   const renderCourses = () => {
@@ -116,13 +157,11 @@ function App() {
       {/* Course Info Table */}
       <div className='registerCourse'>
         <h1>Course Information</h1>
-
+        {error && <div className="error">{error}</div>}
         <select className='studentRegisterMenu' value={selectedStudentRegister} onChange={handleStudentRegister}>
           <option value="">Select Student to Enroll</option>
           {renderStudentSelectDropDown()}
         </select>
-  
-        {selectedStudentRegister && (
           <table className='courseRegisterTable'>
             <thead>
               {renderRegisterTableColumns()}
@@ -131,19 +170,16 @@ function App() {
               {renderCourses()}
             </tbody>
           </table>
-        )}
       </div>
   
       {/* Student Info Table */}
       <div className='registeredCourses'>
         <h1>Registered Student Information</h1>
-  
         <select className='studentRegisteredMenu' value={selectedStudentRegistered} onChange={handleStudentRegistered}>
           <option value="">Select to View Registered Courses</option>
           {renderStudentSelectDropDown()}
         </select>
   
-        {selectedStudentRegistered && (
           <table className='studentRegisteredTable'>
             <thead>
               {renderRegisteredTableColumns()}
@@ -152,7 +188,6 @@ function App() {
               {renderRegisteredCourses()}
             </tbody>
           </table>
-        )}
       </div>
     </div>
   );  
