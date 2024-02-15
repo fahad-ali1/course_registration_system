@@ -2,21 +2,25 @@ import express from "express";
 import bodyParser from "body-parser";
 import route from "./routes/route.js"
 import { connectDB } from "./database/database.js";
+import cors from "cors"
 
 const app = express();
 const port = 8000;
 
 connectDB();
-    // parse application/x-www-form-urlencoded
-    app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(cors());
+  app.use(express.json());
 
-    // parse application/json
-    app.use(bodyParser.json());
+  // parse application/x-www-form-urlencoded
+  app.use(bodyParser.urlencoded({ extended: false }));
 
-    // routes
-    app.use("/", route);
+  // parse application/json
+  app.use(bodyParser.json());
 
-    app.listen(port, function () {
-      console.log(`🚀 Fire app listening on port ${port}!`);
-    }
+  // routes
+  app.use("/", route);
+
+  app.listen(port, function () {
+    console.log(`🚀 Fire app listening on port ${port}!`);
+  }
 );

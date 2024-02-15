@@ -1,0 +1,69 @@
+.homePage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+    border-radius: 5px;
+}
+
+table {
+    width: 50%;
+    margin-top: 24px;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #000000;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #ffa245;
+}
+
+tr:nth-child(even) {
+    background-color: #ffb66d;
+}
+
+tr:hover {
+    background-color: rgb(255, 139, 23);
+    transition: background-color 0.15s ease;
+}
+
+tr:hover td {
+    transition: opacity 0.15s ease; 
+}
+
+.unenroll, .enroll {
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.enroll{
+    background-color: rgb(125, 255, 105);
+}
+
+.unenroll{
+    background-color: rgb(255, 105, 105);
+}
+
+.unenroll:hover {
+    background-color: rgb(156, 0, 0);
+}
+
+.enroll:hover {
+    background-color: rgb(21, 156, 0);
+}
+
+.studentRegisteredMenu, .studentRegisterMenu{
+    padding: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 35%;
+    text-align: center;
+}
