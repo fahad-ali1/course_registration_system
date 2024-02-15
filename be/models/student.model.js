@@ -4,10 +4,7 @@ const studentSchema = new mongoose.Schema({
   studentID: { type: Number, required: true },
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  // registeredCourses: [{
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Course',
-  // }]
+  // registeredCourses: [{type: mongoose.Schema.Types.ObjectId, ref: 'Course'}]
   registeredCourses: []
 });
 

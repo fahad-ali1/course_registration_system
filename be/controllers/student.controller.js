@@ -1,4 +1,4 @@
-import { getAllStudentsFromRepo, getStudentFromRepo, getRegisteredCoursesFromRepo } from '../repositories/student.repo.js';
+import { getAllStudentsFromRepo, getStudentFromRepo, registerCourseFromRepo, unregisterCourseFromRepo, getRegisteredCoursesFromRepo } from '../repositories/student.repo.js';
 
 // Handle student not found
 const handleStudentNotFound = (res, studentID) => {
@@ -34,6 +34,27 @@ export const getStudent = async (req, res) => {
         handleError(res, 500, `Failed to fetch student ${studentID}: ${e.message}`);
     }
 }
+
+export const registerCourse = async (req, res) => {
+    const { studentID, courseID } = req.params;
+    try {
+        const registerCourse = await registerCourseFromRepo({studentID}, parseInt(courseID));
+        res.status(200).send(registerCourse);
+    } catch (e) {
+        handleError(res, 500, `Failed to register course(s): ${e.message}`);
+    }
+}
+
+export const unregisterCourse = async (req, res) => {
+    const { studentID, courseID } = req.params;
+    try {
+        const unregisterCourse = await unregisterCourseFromRepo({studentID}, parseInt(courseID));
+        res.status(200).send(unregisterCourse);
+    } catch (e) {
+        handleError(res, 500, `Failed to unregister course(s): ${e.message}`);
+    }
+}
+
 
 export const getRegisteredCourses = async (req, res) => {
     const { studentID } = req.params;

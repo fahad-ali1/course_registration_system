@@ -1,13 +1,15 @@
 import express from "express";
-import { getAllCourses, getCourse, registerCourse, unregisterCourse } from "../controllers/course.controller.js";
-import { getAllStudents, getStudent, getRegisteredCourses } from "../controllers/student.controller.js";
+import { getAllCourses, getCourse } from "../controllers/course.controller.js";
+import { getAllStudents, getStudent, registerCourse, unregisterCourse, getRegisteredCourses } from "../controllers/student.controller.js";
 const router = express.Router();
 
 // Courses
 router.get('/courses', getAllCourses);
 router.get('/courses/:courseID', getCourse);
-router.post('/:studentID/courses/enroll', registerCourse);
-router.post('/:studentID/courses/unenroll', unregisterCourse);
+
+// Enroll and unenroll
+router.post('/students/:studentID/courses/:courseID/enroll', registerCourse);
+router.post('/students/:studentID/courses/:courseID/unenroll', unregisterCourse);
 router.get('/:studentID/courses', getRegisteredCourses);
 
 // Students
