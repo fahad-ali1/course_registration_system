@@ -11,9 +11,18 @@ export const getAllStudentsFromRepo = async (query) => {
 
 export const getStudentFromRepo = async (query) => {
     try {
-        const course = await Student.findOne(query);
-        return course;
+        const student = await Student.findOne(query);
+        return student;
     } catch (e) {
         throw Error("Error while fetching student!");
+    }
+}
+
+export const getRegisteredCoursesFromRepo = async (query) => {
+    try {
+        const student = await Student.findOne(query);
+        return student.registeredCourses;
+    } catch (e) {
+        throw Error("Error while getting registered course(s)!");
     }
 }
