@@ -7,6 +7,6 @@ const courseSchema = new mongoose.Schema({
   timeOfDay: { type: String, required: true },
 });
 
-const Course = mongoose.model("Course", courseSchema);
+const Course = mongoose.model('Course', courseSchema);
 
 export default Course;
