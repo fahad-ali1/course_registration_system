@@ -1,44 +1,74 @@
 [
-    {
-      "courseID": 1,
-      "courseName": "CMPT 315",
-      "department": "Introduction to Databases",
-      "timeOfDay": "09:00"
-    },
-    {
-      "courseID": 2,
-      "courseName": "MATH 102",
-      "department": "Algebra",
-      "timeOfDay": "10:30"
-    },
-    {
-      "courseID": 3,
-      "courseName": "ENGL 103",
-      "department": "English",
-      "timeOfDay": "13:00"
-    },
-    {
-      "courseID": 4,
-      "courseName": "CMPT 350",
-      "department": "Software Engineering",
-      "timeOfDay": "17:00"
-    },
-    {
-      "courseID": 5,
-      "courseName": "CMPT 103",
-      "department": "Introduction to Programming",
-      "timeOfDay": "09:30"
-    },
-    {
-      "courseID": 6,
-      "courseName": "PSYC 104",
-      "department": "Introduction to Psychology",
-      "timeOfDay": "14:30"
-    },
-    {
-      "courseID": 7,
-      "courseName": "PHYS 400",
-      "department": "Quantum Mechanics",
-      "timeOfDay": "18:30"
-    }
+  {
+    "courseID": 1,
+    "courseName": "CMPT 315",
+    "department": "Introduction to Databases",
+    "timeOfDay": "09:00"
+  },
+  {
+    "courseID": 2,
+    "courseName": "MATH 102",
+    "department": "Algebra",
+    "timeOfDay": "10:30"
+  },
+  {
+    "courseID": 3,
+    "courseName": "ENGL 103",
+    "department": "English",
+    "timeOfDay": "13:00"
+  },
+  {
+    "courseID": 4,
+    "courseName": "CMPT 350",
+    "department": "Software Engineering",
+    "timeOfDay": "14:30"
+  },
+  {
+    "courseID": 5,
+    "courseName": "CMPT 103",
+    "department": "Introduction to Programming",
+    "timeOfDay": "09:00"
+  },
+  {
+    "courseID": 6,
+    "courseName": "PSYC 104",
+    "department": "Introduction to Psychology",
+    "timeOfDay": "14:30"
+  },
+  {
+    "courseID": 7,
+    "courseName": "PHYS 400",
+    "department": "Quantum Mechanics",
+    "timeOfDay": "18:30"
+  },
+  {
+    "courseID": 8,
+    "courseName": "CHEM 201",
+    "department": "Organic Chemistry",
+    "timeOfDay": "11:00"
+  },
+  {
+    "courseID": 9,
+    "courseName": "ECON 202",
+    "department": "Economics",
+    "timeOfDay": "13:00"
+  },
+  {
+    "courseID": 10,
+    "courseName": "PHIL 101",
+    "department": "Intro to Philosophy",
+    "timeOfDay": "10:30"
+  },
+  {
+      "courseID": 11,
+      "courseName": "BIOL 301",
+      "department": "Cell Biology",
+      "timeOfDay": "11:00"
+  },
+  {
+    "courseID": 12,
+    "courseName": "HIST 200",
+    "department": "World History",
+    "timeOfDay": "14:00"
+  }
 ]
