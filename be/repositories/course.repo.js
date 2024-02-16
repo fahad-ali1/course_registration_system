@@ -1,5 +1,6 @@
 import Course from "../models/course.model.js";
 
+//  Get all courses from database
 export const getAllCoursesFromRepo = async () => {
     try {
         const courses = await Course.find();
@@ -9,9 +10,10 @@ export const getAllCoursesFromRepo = async () => {
     }
 }
 
-export const getCourseFromRepo = async (query) => {
+//  Get a course from database
+export const getCourseFromRepo = async (courseID) => {
     try {
-        const course = await Course.findOne(query);
+        const course = await Course.findOne(courseID);
         return course;
     } catch (e) {
         throw Error("Error while fetching course!");

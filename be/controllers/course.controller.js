@@ -10,7 +10,7 @@ const handleError = (res, status, message) => {
   res.status(status).send(message);
 };
   
-// Gets all the courses list from the database
+// Call function from repo to get all the courses
 export const getAllCourses = async (req, res) => {
   try {
       const courses = await getAllCoursesFromRepo();
@@ -20,7 +20,7 @@ export const getAllCourses = async (req, res) => {
     }
 }
 
-// Get a single course by its ID
+// Call function in repo to get a single course
 export const getCourse = async (req, res) => {
   const { courseID } = req.params;
   try {

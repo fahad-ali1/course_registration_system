@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 mongoose.set('strictQuery', true);
 
-// Connect to local database
+// Connect to local (or external) database
 export const connectDB = async () => {
   const dbNAME = process.env.dbNAME
   const dbPASSWORD = process.env.dbPASSWORD

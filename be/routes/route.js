@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/courses', getAllCourses);
 router.get('/courses/:courseID', getCourse);
 
-// Enroll and unenroll
+// Enroll and unenroll students
 router.post('/students/:studentID/courses/:courseID/enroll', registerCourse);
 router.post('/students/:studentID/courses/:courseID/unenroll', unregisterCourse);
 router.get('/:studentID/courses', getRegisteredCourses);

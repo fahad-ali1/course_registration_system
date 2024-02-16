@@ -10,7 +10,7 @@ const handleError = (res, status, message) => {
     res.status(status).send(message);
 };
 
-// Gets all the students list from the database
+// Call function from repo for all students
 export const getAllStudents = async (req, res) => {
     try {
         const students = await getAllStudentsFromRepo();
@@ -20,7 +20,7 @@ export const getAllStudents = async (req, res) => {
     }
 }
 
-// Get a single course by its ID
+// Call function from repo for a single student by its ID
 export const getStudent = async (req, res) => {
     const { studentID } = req.params;
     try {
@@ -35,6 +35,7 @@ export const getStudent = async (req, res) => {
     }
 }
 
+// Call function from repo to register a student to a course (both params needed)
 export const registerCourse = async (req, res) => {
     const { studentID, courseID } = req.params;
     try {
@@ -45,6 +46,7 @@ export const registerCourse = async (req, res) => {
     }
 }
 
+// Call function from repo to unregister a student to a course (both params needed)
 export const unregisterCourse = async (req, res) => {
     const { studentID, courseID } = req.params;
     try {
@@ -55,7 +57,7 @@ export const unregisterCourse = async (req, res) => {
     }
 }
 
-
+// Call function from repo to show all registered students by student ID
 export const getRegisteredCourses = async (req, res) => {
     const { studentID } = req.params;
     try {

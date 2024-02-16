@@ -9,7 +9,9 @@ function App() {
   const [selectedStudentRegister, setSelectedStudentRegisterView] = useState('');
   const [error, setError] = useState('');
 
-  // Fetch students and courses from database
+  /**
+   *  Fetch student and courses dataset
+   */
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -24,14 +26,23 @@ function App() {
     fetchData();
   }, []);
 
+  /**
+   *  Handles drop down menu for registered student info 
+   */
   const handleStudentRegistered = (event) => {
     setSelectedStudentRegisteredView(event.target.value);
   };
 
+  /**
+   *  Handles drop down menu for registering a student  
+   */
   const handleStudentRegister = (event) => {
     setSelectedStudentRegisterView(event.target.value);
   };
 
+  /**
+   *  Render the drop down menu to choose student
+   */
   const renderStudentSelectDropDown = () => {
     return students.map((student) => (
       <option key={student._id} value={student.studentID}>
@@ -40,19 +51,23 @@ function App() {
     ));
   };
 
+  /**
+   *  Handles enrolling to given course ID when student selected
+   */
   const handleEnrollButton = async (courseID) => {
     const selectedStudentID = parseInt(selectedStudentRegister);
 
+    // Error check to make sure student is selected
     if (selectedStudentRegister === '') {
       setError("Please select a student first");
       window.scrollTo(0, 0);
-      
-    }else{setError('')
+    }else{setError('') // Remove error 
 
+      // Update database with enroll
       try {
         await axios.post(`http://localhost:8000/students/${selectedStudentID}/courses/${courseID}/enroll`);
 
-        // Update the state after enrollment
+        // Update the state after enrollment for live table feedback
         const updatedStudentsResponse = await axios.get('http://localhost:8000/students');
         const updatedCoursesResponse = await axios.get('http://localhost:8000/courses');
         setStudents(updatedStudentsResponse.data);
@@ -64,6 +79,9 @@ function App() {
     }
   } 
 
+  /**
+   *  Handles unenrolling to given course ID when student selected
+   */
   const handleUnenrollButton = async (courseID) => {
     const selectedStudentID = parseInt(selectedStudentRegistered);
 
@@ -73,11 +91,11 @@ function App() {
 
     }else{setError('')
 
+      // Update database with unenroll
       try {
-        
         await axios.post(`http://localhost:8000/students/${selectedStudentID}/courses/${courseID}/unenroll`);
         
-        // Update the state after unenrollment
+        // Update the state after unenrollment for live table view
         const updatedStudentsResponse = await axios.get('http://localhost:8000/students');
         const updatedCoursesResponse = await axios.get('http://localhost:8000/courses');
         setStudents(updatedStudentsResponse.data);
@@ -90,6 +108,9 @@ function App() {
     }
   }
 
+  /**
+   *  Render courses that are able to be unerolled in by a student
+   */
   const renderCourses = () => {
     return courses.map((course) => (
       <tr key={course.courseID}>
@@ -105,10 +126,13 @@ function App() {
     ));
   }
 
+  /**
+   *  Render courses that are already taken by selected student
+   */
   const renderRegisteredCourses = () => {
     const selectedStudentID = parseInt(selectedStudentRegistered);
     const student = students.find((student) => student.studentID === selectedStudentID);
-    if (!student) return null;
+    if (!student) return ''; // if no student selected
 
     return student.registeredCourses.map((courseID) => {
       const course = courses.find((course) => course.courseID === courseID);
@@ -127,6 +151,9 @@ function App() {
     });
   };
 
+  /**
+   *  Render courses columns
+   */
   const renderRegisterTableColumns = () => {
     return (
       <tr>
@@ -139,6 +166,9 @@ function App() {
     );
   };  
 
+  /**
+   *  Render courses columns with student ID
+   */
   const renderRegisteredTableColumns = () => {
     return (
       <tr>
@@ -154,7 +184,7 @@ function App() {
 
   return (
     <div>
-      {/* Course Info Table */}
+      {/************ Course Info Table ************/}
       <div className='registerCourse'>
         <h1>Course Information</h1>
         {error && <div className="error">{error}</div>}
@@ -172,7 +202,7 @@ function App() {
           </table>
       </div>
   
-      {/* Student Info Table */}
+      {/************ Student Info Table{/*************/}
       <div className='registeredCourses'>
         <h1>Registered Student Information</h1>
         <select className='studentRegisteredMenu' value={selectedStudentRegistered} onChange={handleStudentRegistered}>
