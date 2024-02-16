@@ -209,9 +209,10 @@ function App() {
             </tbody>
           </table>
       </div>
+
       {error && <div className="error">{error}</div>}
       {success && <div className="success">{success}</div>}
-      {/************ Student Info Table{/*************/}
+      {/************ Student Info Table *************/}
       <div className='registeredCourses'>
         <h1>Registered Student Information</h1>
         <select className='studentRegisteredMenu' value={selectedStudentRegistered} onChange={handleStudentRegistered}>
@@ -228,6 +229,11 @@ function App() {
             </tbody>
           </table>
       </div>
+
+      {/************ Footer *************/}
+      <footer className='footer'>
+        <p>Site made by Fahad © {new Date().getFullYear()}</p>
+      </footer>
     </div>
   );  
 }
