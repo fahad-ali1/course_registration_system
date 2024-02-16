@@ -20,7 +20,7 @@ Fahad
 - **Frontend:**
   - React.js
 
-### Screenshots
+## Screenshots
 <img width="600" alt="Screenshot 2024-02-15 at 7 15 19 PM" src="https://github.com/fahad-ali1/course_registration_system/assets/97869609/7413f0c5-0b67-4ecb-a41f-8411a48a58b1">
 <img width="600" alt="Screenshot 2024-02-15 at 7 15 50 PM" src="https://github.com/fahad-ali1/course_registration_system/assets/97869609/df475b67-64f1-43ec-813d-8e3cd74710c8">
 <img width="600" alt="Screenshot 2024-02-15 at 7 15 41 PM" src="https://github.com/fahad-ali1/course_registration_system/assets/97869609/7aed55fb-f5f4-4ab8-b2c5-881f62b793b5">
