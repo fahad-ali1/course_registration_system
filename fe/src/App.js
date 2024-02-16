@@ -8,6 +8,7 @@ function App() {
   const [selectedStudentRegistered, setSelectedStudentRegisteredView] = useState('1');
   const [selectedStudentRegister, setSelectedStudentRegisterView] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   /**
    *  Fetch student and courses dataset
@@ -38,6 +39,15 @@ function App() {
    */
   const handleStudentRegister = (event) => {
     setSelectedStudentRegisterView(event.target.value);
+  };
+
+  // Display green successs message 
+  const setSuccessMessage = (message, duration = 3000) => {
+    setSuccess(message);
+  
+    setTimeout(() => {
+      setSuccess('');
+    }, duration);
   };
 
   /**
@@ -72,6 +82,7 @@ function App() {
         const updatedCoursesResponse = await axios.get('http://localhost:8000/courses');
         setStudents(updatedStudentsResponse.data);
         setCourses(updatedCoursesResponse.data);
+        setSuccessMessage("Successfully enrolled!", 5000);
       } catch (error) {
           setError("Error enrolling student: " + error.response.data);
           window.scrollTo(0, 0);
@@ -87,8 +98,6 @@ function App() {
 
     if (selectedStudentRegistered === '') {
       setError("Please select a student first");
-      window.scrollTo(0, 0);
-
     }else{setError('')
 
       // Update database with unenroll
@@ -100,7 +109,7 @@ function App() {
         const updatedCoursesResponse = await axios.get('http://localhost:8000/courses');
         setStudents(updatedStudentsResponse.data);
         setCourses(updatedCoursesResponse.data);
-
+        setSuccessMessage("Successfully unenrolled!", 5000);
       } catch (error) {
           setError("Error unenrolling student: " + error.response.data);
           window.scrollTo(0, 0);
@@ -187,7 +196,6 @@ function App() {
       {/************ Course Info Table ************/}
       <div className='registerCourse'>
         <h1>Course Information</h1>
-        {error && <div className="error">{error}</div>}
         <select className='studentRegisterMenu' value={selectedStudentRegister} onChange={handleStudentRegister}>
           <option value="">Select Student to Enroll</option>
           {renderStudentSelectDropDown()}
@@ -201,7 +209,8 @@ function App() {
             </tbody>
           </table>
       </div>
-  
+      {error && <div className="error">{error}</div>}
+      {success && <div className="success">{success}</div>}
       {/************ Student Info Table{/*************/}
       <div className='registeredCourses'>
         <h1>Registered Student Information</h1>
