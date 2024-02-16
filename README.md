@@ -49,7 +49,11 @@ Fahad
   - courseName
   - department
   - timeOfDay
-  - 
+
+## Installing
+```bash
+git clone https://github.com/fahad-ali1/course_registration_system
+```
 
 ### Installing the back-end
 Install dependencies
