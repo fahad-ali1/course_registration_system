@@ -3,7 +3,9 @@ import bodyParser from "body-parser";
 import route from "./routes/route.js"
 import { connectDB } from "./database/database.js";
 import cors from "cors"
+import dotenv from "dotenv";
 
+dotenv.config();
 const app = express();
 const port = 8000;
 

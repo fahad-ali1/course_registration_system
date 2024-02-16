@@ -9,10 +9,13 @@ export const connectDB = async () => {
   const dbCLUSTER = process.env.dbCLUSTER
   const dataBase = process.env.dataBase;
 
-  // For local development, uncomment line 13 and comment out line 14
-  const url = `mongodb://localhost:27017/course_register`;
-  //const url = `mongodb+srv://${dbNAME}:${dbPASSWORD}@${dbCLUSTER}/${dataBase}`;
+  // ---------- Trouble shoot if envrionment is being passedthrough ----------
+  // console.log("=================== Database User: " + dbNAME, "Database Cluster: " + dbCLUSTER, "\n=================== Database Password: " + dbPASSWORD, "Database: " + dataBase)
 
+  // ---------- For local development, uncomment line 17 and comment out line 18 ----------
+
+  //const url = `mongodb://localhost:27017/course_register`;
+  const url = `mongodb+srv://${dbNAME}:${dbPASSWORD}@${dbCLUSTER}/${dataBase}`;
   try {
     const connection = await mongoose.connect(url, {
       useUnifiedTopology: true,
