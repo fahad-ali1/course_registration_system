@@ -39,7 +39,7 @@ export const getStudent = async (req, res) => {
 export const registerCourse = async (req, res) => {
     const { studentID, courseID } = req.params;
     try {
-        const registerCourse = await registerCourseFromRepo({studentID}, parseInt(courseID));
+        const registerCourse = await registerCourseFromRepo({studentID, courseID});
         res.status(200).send(registerCourse);
     } catch (e) {
         handleError(res, 500, `Failed to register course(s): ${e.message}`);

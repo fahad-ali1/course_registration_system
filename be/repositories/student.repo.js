@@ -1,4 +1,5 @@
 import Student from "../models/student.model.js";
+import Course from "../models/course.model.js"
 
 // Gets all the students list from the database
 export const getAllStudentsFromRepo = async () => {
@@ -21,17 +22,31 @@ export const getStudentFromRepo = async (studentID) => {
 }
 
 // Register a student to a course by their ID and courseID
-export const registerCourseFromRepo = async (studentID, courseID) => {
+export const registerCourseFromRepo = async (query) => {
+    const { studentID, courseID } = query;
     try {
-        const student = await Student.findOne(studentID);
+        const student = await Student.findOne({ studentID: studentID });
+        const course = await Course.findOne({ courseID: courseID }); 
+
+        // Check for time conflicts
+        const newCourseTime = course.timeOfDay;
+        const registeredCourses = await Course.find({ courseID: { $in: student.registeredCourses } });
+
         // If they are not already enrolled, then enroll them
-        if (!student.registeredCourses.includes(courseID)) {
-            student.registeredCourses.push(courseID);
+        if (!student.registeredCourses.includes(course.courseID)) {
+            student.registeredCourses.push(course.courseID);
         } else {
-            throw Error("Already registered");
+            throw Error(`Already registered in ${course.courseName}`);
         }
+        for (const registeredCourse of registeredCourses) {
+            if (registeredCourse.timeOfDay === newCourseTime) {
+                throw Error(`Time conflict at ${registeredCourse.timeOfDay} with ${registeredCourse.courseName}!`);
+            }
+        }
+
         await student.save();
-        return student;
+        await course.save();
+        return student, course;
     } catch (e) {
         throw Error(`Error while registering course(s): ${e.message}`);
     }
