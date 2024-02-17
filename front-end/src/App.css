@@ -1,0 +1,107 @@
+.registerCourse, .registeredCourses {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+    border-radius: 5px;
+}
+
+table {
+    width: 75%;
+    margin-top: 24px;
+    border-collapse: collapse;
+}
+
+.courseRegisterTable, .studentRegisteredTable {
+    max-height: 350px;
+    overflow-y: auto; 
+    max-width: fit-content;
+    display: block;
+}
+  
+.courseRegisterTable thead, .studentRegisteredTable thead {
+    position: sticky;
+    top: 0;
+}
+
+th, td {
+    border: 1px solid #000000;
+    padding: 16px;
+    text-align: center;
+}
+
+th {
+    background-color: #ffa245;
+}
+
+tr:nth-child(even) {
+    background-color: #ffb66d;
+}
+
+tr:hover {
+    background-color: rgb(255, 139, 23);
+    transition: background-color 0.15s ease;
+}
+
+tr:hover td {
+    transition: opacity 0.15s ease; 
+}
+
+.unenroll, .enroll {
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.enroll{
+    background-color: rgb(125, 255, 105);
+}
+
+.unenroll{
+    background-color: rgb(255, 105, 105);
+}
+
+.unenroll:hover {
+    background-color: rgb(156, 0, 0);
+}
+
+.enroll:hover {
+    background-color: rgb(21, 156, 0);
+}
+
+.studentRegisteredMenu, .studentRegisterMenu{
+    padding: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 35%;
+    text-align: center;
+}
+
+.error, .success {
+    text-align: center;
+    padding: 12px;
+    margin-bottom: 16px;
+    border-radius: 4px;
+}
+
+.success {
+    background-color: rgb(172, 239, 157);
+    border: 1px solid rgb(74, 252, 35);
+    color: rgb(29, 156, 0);
+}
+
+.error{
+    background-color: rgb(255, 214, 214);
+    border: 1px solid rgb(255, 141, 141);
+    color: rgb(156, 0, 0);
+}
+
+.footer{
+    text-align: center;
+    padding: 0;
+    bottom: 0;
+    width: 100%;
+}
