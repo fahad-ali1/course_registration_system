@@ -58,7 +58,7 @@ git clone https://github.com/fahad-ali1/course_registration_system
 ### Installing the back-end
 Install dependencies
 ```bash
-cd be
+cd back-end
 npm install
 ```
 
@@ -84,7 +84,7 @@ db.students.insertMany(coursesArray)
 
 ### Installing the front-end
 ```bash
-cd fe
+cd front-end
 npm install
 npm start
 ```
