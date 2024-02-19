@@ -5,11 +5,12 @@ import './App.css';
 function App() {
   // Local host development
   // const apiUrl = 'http://localhost:8000';
-  const dbNAME = process.env.REACT_APP_dbNAME
-  const dbPASSWORD = process.env.REACT_APP_dbPASSWORD
-  const dbCLUSTER = process.env.REACT_APP_dbCLUSTER
-  const dataBase = process.env.REACT_APP_dataBase;
-  const apiUrl = `mongodb+srv://${dbNAME}:${dbPASSWORD}@${dbCLUSTER}/${dataBase}`;
+  // const dbNAME = process.env.REACT_APP_dbNAME
+  // const dbPASSWORD = process.env.REACT_APP_dbPASSWORD
+  // const dbCLUSTER = process.env.REACT_APP_dbCLUSTER
+  // const dataBase = process.env.REACT_APP_dataBase;
+  // const apiUrl = `mongodb+srv://${dbNAME}:${dbPASSWORD}@${dbCLUSTER}/${dataBase}`;
+  const apiUrl='https://course-register-be.onrender.com'
 
   const [students, setStudents] = useState([]);
   const [courses, setCourses] = useState([]);
