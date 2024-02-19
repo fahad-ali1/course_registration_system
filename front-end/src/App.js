@@ -18,6 +18,7 @@ function App() {
   const [selectedStudentRegister, setSelectedStudentRegisterView] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [loading, setLoading] = useState(true);
 
   /**
    *  Fetch student and courses dataset
@@ -29,8 +30,10 @@ function App() {
         const coursesResponse = await axios.get(`${apiUrl}/courses`);
         setStudents(studentsResponse.data);
         setCourses(coursesResponse.data);
+        setLoading(false);
       } catch (error) {
         setError(error)
+        setLoading(false);
       }
     };
     fetchData();
@@ -202,6 +205,7 @@ function App() {
 
   return (
     <div>
+    {loading && <div className="loading">Fetching data... May take up to 60 seconds</div>}
       {/************ Course Info Table ************/}
       <div className='registerCourse'>
         <h1>Course Information</h1>
