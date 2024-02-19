@@ -33,7 +33,7 @@ function App() {
       }
     };
     fetchData();
-  }, []);
+  }, [apiUrl]);
 
   /**
    *  Handles drop down menu for registered student info 
