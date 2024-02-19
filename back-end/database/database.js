@@ -14,8 +14,8 @@ export const connectDB = async () => {
 
   // ---------- For local development, uncomment line 17 and comment out line 18 ----------
 
-  const url = `mongodb://localhost:27017/course_register`;
-  // const url = `mongodb+srv://${dbNAME}:${dbPASSWORD}@${dbCLUSTER}/${dataBase}`;
+  // const url = `mongodb://localhost:27017/course_register`;
+  const url = `mongodb+srv://${dbNAME}:${dbPASSWORD}@${dbCLUSTER}/${dataBase}`;
   try {
     const connection = await mongoose.connect(url, {
       useUnifiedTopology: true,
