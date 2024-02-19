@@ -113,3 +113,29 @@ tr:hover td {
     font-weight: bold;
     color: #333; 
   }
+
+/* Media Query for smaller screens */
+@media screen and (max-width: 768px) {
+    body{
+        font-size: 14px;
+        text-align: center;
+    }
+    .studentRegisteredMenu, .studentRegisterMenu{
+        text-align: center;
+        width: 70%;
+    }
+    table {
+        width: 100%;
+    }
+
+    th, td {
+        padding: 8px; 
+    }
+
+    .footer {
+        padding: 8px;
+    }
+    .unenroll, .enroll {
+        padding: 4px;
+    }
+}
