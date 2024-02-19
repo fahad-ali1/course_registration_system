@@ -3,6 +3,14 @@ import axios from 'axios';
 import './App.css';
 
 function App() {
+  // Local host development
+  // const apiUrl = 'http://localhost:8000';
+  const dbNAME = process.env.REACT_APP_dbNAME
+  const dbPASSWORD = process.env.REACT_APP_dbPASSWORD
+  const dbCLUSTER = process.env.REACT_APP_dbCLUSTER
+  const dataBase = process.env.REACT_APP_dataBase;
+  const apiUrl = `mongodb+srv://${dbNAME}:${dbPASSWORD}@${dbCLUSTER}/${dataBase}`;
+
   const [students, setStudents] = useState([]);
   const [courses, setCourses] = useState([]);
   const [selectedStudentRegistered, setSelectedStudentRegisteredView] = useState('1');
@@ -16,8 +24,8 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const studentsResponse = await axios.get('http://localhost:8000/students');
-        const coursesResponse = await axios.get('http://localhost:8000/courses');
+        const studentsResponse = await axios.get(`${apiUrl}/students`);
+        const coursesResponse = await axios.get(`${apiUrl}/courses`);
         setStudents(studentsResponse.data);
         setCourses(coursesResponse.data);
       } catch (error) {
@@ -75,11 +83,11 @@ function App() {
 
       // Update database with enroll
       try {
-        await axios.post(`http://localhost:8000/students/${selectedStudentID}/courses/${courseID}/enroll`);
+        await axios.post(`${apiUrl}/students/${selectedStudentID}/courses/${courseID}/enroll`);
 
         // Update the state after enrollment for live table feedback
-        const updatedStudentsResponse = await axios.get('http://localhost:8000/students');
-        const updatedCoursesResponse = await axios.get('http://localhost:8000/courses');
+        const updatedStudentsResponse = await axios.get(`${apiUrl}/students`);
+        const updatedCoursesResponse = await axios.get(`${apiUrl}/courses`);
         setStudents(updatedStudentsResponse.data);
         setCourses(updatedCoursesResponse.data);
         setSuccessMessage("Successfully enrolled!", 5000);
@@ -102,11 +110,11 @@ function App() {
 
       // Update database with unenroll
       try {
-        await axios.post(`http://localhost:8000/students/${selectedStudentID}/courses/${courseID}/unenroll`);
+        await axios.post(`${apiUrl}/students/${selectedStudentID}/courses/${courseID}/unenroll`);
         
         // Update the state after unenrollment for live table view
-        const updatedStudentsResponse = await axios.get('http://localhost:8000/students');
-        const updatedCoursesResponse = await axios.get('http://localhost:8000/courses');
+        const updatedStudentsResponse = await axios.get(`${apiUrl}/students`);
+        const updatedCoursesResponse = await axios.get(`${apiUrl}/courses`);
         setStudents(updatedStudentsResponse.data);
         setCourses(updatedCoursesResponse.data);
         setSuccessMessage("Successfully unenrolled!", 5000);
