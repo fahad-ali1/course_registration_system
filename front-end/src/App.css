@@ -1,3 +1,29 @@
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+  
+.page-content {
+    flex: 1; 
+    overflow-y: auto; 
+}
+
+.welcome-section {
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+  
+.welcome-section h2 {
+    font-size: 42px;
+}
+  
+.welcome-section p {
+    font-size: 18px;
+}
+
 .registerCourse, .registeredCourses {
     display: flex;
     flex-direction: column;
@@ -13,7 +39,7 @@ table {
 }
 
 .courseRegisterTable, .studentRegisteredTable {
-    max-height: 350px;
+    max-height: 500px;
     overflow-y: auto; 
     max-width: fit-content;
     display: block;
@@ -47,16 +73,25 @@ tr:hover td {
     transition: opacity 0.15s ease; 
 }
 
-.unenroll, .enroll {
+.unenroll, .enroll, .enrolled {
     padding: 12px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    color: black;
 }
 
 .enroll{
     background-color: rgb(125, 255, 105);
+}
+
+.enrolled{
+    background-color: rgb(214, 255, 207);
+}
+
+.enrolled:hover{
+    cursor: not-allowed;
 }
 
 .unenroll{
@@ -78,13 +113,20 @@ tr:hover td {
     cursor: pointer;
     width: 35%;
     text-align: center;
+    color: black;
 }
 
-.error, .success {
+.error, .success, .loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
     padding: 12px;
-    margin-bottom: 16px;
     border-radius: 4px;
+    z-index: 999;
+    background-color: rgba(255, 255, 255, 0.9); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
 .success {
@@ -101,9 +143,9 @@ tr:hover td {
 
 .footer{
     text-align: center;
-    padding: 0;
     bottom: 0;
     width: 100%;
+    padding: 10px;
 }
 
 .loading {
@@ -111,21 +153,61 @@ tr:hover td {
     padding: 16px;
     margin-top: 24px;
     font-weight: bold;
-    color: #333; 
+    color: black; 
+}
+
+.page-buttons {
+    display: flex;
+    justify-content: center; 
+    margin-bottom: 20px;
+    position: absolute; 
+    bottom: 2vh;
+    width: 100%; 
+}
+  
+.page-buttons button {
+    padding: 10px 20px;
+    margin: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 200px;
+    background-color: #ffa245;
+    transition: background-color 0.3s ease;
+    color: black;
+}
+  
+.page-buttons button:hover {
+    background-color: #ff7f00;
+}
+
+.page-buttons button.active {
+    background-color: #ff7f00;
   }
 
 /* Media Query for smaller screens */
 @media screen and (max-width: 768px) {
+    .welcome-section h2 {
+        font-size: 24px;
+    }
+
     body{
         font-size: 14px;
         text-align: center;
     }
+
     .studentRegisteredMenu, .studentRegisterMenu{
         text-align: center;
         width: 70%;
     }
+
     table {
         width: 100%;
+    }
+
+    .courseRegisterTable, .studentRegisteredTable {
+        max-height: 375px;
     }
 
     th, td {
@@ -135,7 +217,12 @@ tr:hover td {
     .footer {
         padding: 8px;
     }
-    .unenroll, .enroll {
+
+    .unenroll, .enroll, .enrolled {
         padding: 4px;
+    }
+
+    .page-buttons{
+        bottom: 1vh;
     }
 }

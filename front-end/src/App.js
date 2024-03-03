@@ -1,28 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
+import CourseInformation from './components/courseInformation/CourseInformation';
+import RegisteredStudentInformation from './components/registerdStudents/RegisteredStudentInformation';
 
 function App() {
-  // Local host development
-  // const apiUrl = 'http://localhost:8000';
-  // const dbNAME = process.env.REACT_APP_dbNAME
-  // const dbPASSWORD = process.env.REACT_APP_dbPASSWORD
-  // const dbCLUSTER = process.env.REACT_APP_dbCLUSTER
-  // const dataBase = process.env.REACT_APP_dataBase;
-  // const apiUrl = `mongodb+srv://${dbNAME}:${dbPASSWORD}@${dbCLUSTER}/${dataBase}`;
-  const apiUrl='https://course-register-be.onrender.com'
+  const apiUrl = 'https://course-register-be.onrender.com';
 
   const [students, setStudents] = useState([]);
   const [courses, setCourses] = useState([]);
-  const [selectedStudentRegistered, setSelectedStudentRegisteredView] = useState('1');
+  const [selectedStudentRegistered, setSelectedStudentRegisteredView] = useState('');
   const [selectedStudentRegister, setSelectedStudentRegisterView] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(''); 
 
-  /**
-   *  Fetch student and courses dataset
-   */
+  // Function to fetch data
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,128 +26,116 @@ function App() {
         setCourses(coursesResponse.data);
         setLoading(false);
       } catch (error) {
-        setError(error)
+        setError(error);
         setLoading(false);
       }
     };
     fetchData();
   }, [apiUrl]);
 
-  /**
-   *  Handles drop down menu for registered student info 
-   */
+  // Handler for selecting registered student
   const handleStudentRegistered = (event) => {
     setSelectedStudentRegisteredView(event.target.value);
   };
 
-  /**
-   *  Handles drop down menu for registering a student  
-   */
+  // Handler for selecting student to register
   const handleStudentRegister = (event) => {
     setSelectedStudentRegisterView(event.target.value);
   };
 
-  // Display green successs message 
+  // Function to display success message
   const setSuccessMessage = (message, duration = 3000) => {
     setSuccess(message);
-  
     setTimeout(() => {
       setSuccess('');
     }, duration);
   };
 
-  /**
-   *  Render the drop down menu to choose student
-   */
-  const renderStudentSelectDropDown = () => {
-    return students.map((student) => (
-      <option key={student._id} value={student.studentID}>
-        {student.name}
-      </option>
-    ));
-  };
-
-  /**
-   *  Handles enrolling to given course ID when student selected
-   */
+  // Function to handle course enrollment
   const handleEnrollButton = async (courseID) => {
     const selectedStudentID = parseInt(selectedStudentRegister);
 
-    // Error check to make sure student is selected
     if (selectedStudentRegister === '') {
       setError("Please select a student first");
       window.scrollTo(0, 0);
-    }else{setError('') // Remove error 
+    } else {
+      setError('');
 
-      // Update database with enroll
       try {
         await axios.post(`${apiUrl}/students/${selectedStudentID}/courses/${courseID}/enroll`);
 
-        // Update the state after enrollment for live table feedback
         const updatedStudentsResponse = await axios.get(`${apiUrl}/students`);
         const updatedCoursesResponse = await axios.get(`${apiUrl}/courses`);
         setStudents(updatedStudentsResponse.data);
         setCourses(updatedCoursesResponse.data);
         setSuccessMessage("Successfully enrolled!", 5000);
       } catch (error) {
-          setError("Error enrolling student: " + error.response.data);
-          window.scrollTo(0, 0);
+        setError("Error enrolling student: " + error.response.data);
+        window.scrollTo(0, 0);
       }
     }
-  } 
+  };
 
-  /**
-   *  Handles unenrolling to given course ID when student selected
-   */
+  // Function to handle course unenrollment
   const handleUnenrollButton = async (courseID) => {
     const selectedStudentID = parseInt(selectedStudentRegistered);
 
     if (selectedStudentRegistered === '') {
       setError("Please select a student first");
-    }else{setError('')
+    } else {
+      setError('');
 
-      // Update database with unenroll
       try {
         await axios.post(`${apiUrl}/students/${selectedStudentID}/courses/${courseID}/unenroll`);
-        
-        // Update the state after unenrollment for live table view
+
         const updatedStudentsResponse = await axios.get(`${apiUrl}/students`);
         const updatedCoursesResponse = await axios.get(`${apiUrl}/courses`);
         setStudents(updatedStudentsResponse.data);
         setCourses(updatedCoursesResponse.data);
         setSuccessMessage("Successfully unenrolled!", 5000);
       } catch (error) {
-          setError("Error unenrolling student: " + error.response.data);
-          window.scrollTo(0, 0);
+        setError("Error unenrolling from class: " + error.response.data);
+        window.scrollTo(0, 0);
       }
     }
-  }
+  };
 
-  /**
-   *  Render courses that are able to be unerolled in by a student
-   */
+  // Function to render courses available for enrollment
   const renderCourses = () => {
-    return courses.map((course) => (
-      <tr key={course.courseID}>
-        <td>{course.courseID}</td>
-        <td>{course.courseName}</td>
-        <td>{course.department}</td>
-        <td>{course.timeOfDay}</td>
-        <td>
-          <button className='enroll' onClick={() => handleEnrollButton(course.courseID)}>
-          Enroll</button>
-          </td>
-      </tr>
-    ));
-  }
+    const selectedStudentID = parseInt(selectedStudentRegister);
+    const student = students.find((student) => student.studentID === selectedStudentID);
+    if (!student) return '';
 
-  /**
-   *  Render courses that are already taken by selected student
-   */
+    return courses.map((course) => {
+      const isEnrolled = student.registeredCourses.includes(course.courseID);
+
+      return (
+        <tr key={course.courseID}>
+          <td>{course.courseID}</td>
+          <td>{course.courseName}</td>
+          <td>{course.department}</td>
+          <td>{course.timeOfDay}</td>
+          <td>
+            {isEnrolled ? (
+              <button className='enrolled' disabled>
+                Enrolled
+              </button>
+            ) : (
+              <button className='enroll' onClick={() => handleEnrollButton(course.courseID)}>
+                Enroll
+              </button>
+            )}
+          </td>
+        </tr>
+      );
+    });
+  };
+
+  // Function to render courses already taken by a student
   const renderRegisteredCourses = () => {
     const selectedStudentID = parseInt(selectedStudentRegistered);
     const student = students.find((student) => student.studentID === selectedStudentID);
-    if (!student) return ''; // if no student selected
+    if (!student) return '';
 
     return student.registeredCourses.map((courseID) => {
       const course = courses.find((course) => course.courseID === courseID);
@@ -164,33 +146,34 @@ function App() {
           <td>{course.courseName}</td>
           <td>{course.department}</td>
           <td>{course.timeOfDay}</td>
-          <td><button className='unenroll' onClick={() => handleUnenrollButton(course.courseID)}>
-            Unenroll</button>
-            </td>
+          <td>
+            <button className='unenroll' onClick={() => handleUnenrollButton(course.courseID)}>
+              Drop
+            </button>
+          </td>
         </tr>
       );
     });
   };
 
-  /**
-   *  Render courses columns
-   */
+  // Function to render columns for courses available for enrollment
   const renderRegisterTableColumns = () => {
+    if (selectedStudentRegister === '') return null; 
+  
     return (
       <tr>
         <th>Course ID</th>
         <th>Course Name</th>
         <th>Department</th>
         <th>Time of Day</th>
-        <th>Unenroll</th>
+        <th>Enroll</th>
       </tr>
     );
-  };  
+  };
 
-  /**
-   *  Render courses columns with student ID
-   */
+  // Function to render columns for registered courses
   const renderRegisteredTableColumns = () => {
+    if (selectedStudentRegistered === '') return null; 
     return (
       <tr>
         <th>Student ID</th>
@@ -198,56 +181,61 @@ function App() {
         <th>Course Name</th>
         <th>Department</th>
         <th>Time of Day</th>
-        <th>Unenroll</th>
+        <th>Drop</th>
       </tr>
     );
-  };  
+  };
 
   return (
-    <div>
-    {loading && <div className="loading">Fetching data... May take up to 60 seconds</div>}
-      {/************ Course Info Table ************/}
-      <div className='registerCourse'>
-        <h1>Course Information</h1>
-        <select className='studentRegisterMenu' value={selectedStudentRegister} onChange={handleStudentRegister}>
-          <option value="">Select Student to Enroll</option>
-          {renderStudentSelectDropDown()}
-        </select>
-          <table className='courseRegisterTable'>
-            <thead>
-              {renderRegisterTableColumns()}
-            </thead>
-            <tbody>
-              {renderCourses()}
-            </tbody>
-          </table>
+    <div className="page-container">
+      <div className="page-content">
+        {loading && <div className="loading">Fetching data... May take up to 60 seconds</div>}
+        {error && <div className="error">{error}</div>}
+        {success && <div className="success">{success}</div>}
+        {currentPage === '' && (
+          <div className="welcome-section">
+            <h2>Welcome to Fahad's Course Registration System!</h2>
+            <p>This system allows you to enroll in courses connected to a MongoDB database!</p>
+            <h4>To get started, click one of the navigation buttons below.</h4>
+          </div>
+          )}
+        <div className="page-buttons">
+          <button 
+            onClick={() => setCurrentPage('course')} 
+            className={currentPage === 'course' ? 'active' : ''}
+          >
+            Course Information
+          </button>
+          <button 
+            onClick={() => setCurrentPage('student')} 
+            className={currentPage === 'student' ? 'active' : ''}
+          >
+            Registered Students
+          </button>
+        </div>
+        {currentPage === 'course' && (
+          <CourseInformation
+            students={students}
+            selectedStudentRegister={selectedStudentRegister}
+            handleStudentRegister={handleStudentRegister}
+            renderRegisterTableColumns={renderRegisterTableColumns}
+            renderCourses={renderCourses}
+          />
+        )}
+        {currentPage === 'student' && (
+          <RegisteredStudentInformation
+            students={students}
+            selectedStudentRegistered={selectedStudentRegistered}
+            handleStudentRegistered={handleStudentRegistered}
+            renderRegisteredTableColumns={renderRegisteredTableColumns}
+            renderRegisteredCourses={renderRegisteredCourses}
+          />
+        )}
       </div>
-
-      {error && <div className="error">{error}</div>}
-      {success && <div className="success">{success}</div>}
-      {/************ Student Info Table *************/}
-      <div className='registeredCourses'>
-        <h1>Registered Student Information</h1>
-        <select className='studentRegisteredMenu' value={selectedStudentRegistered} onChange={handleStudentRegistered}>
-          <option value="">Select to View Registered Courses</option>
-          {renderStudentSelectDropDown()}
-        </select>
-  
-          <table className='studentRegisteredTable'>
-            <thead>
-              {renderRegisteredTableColumns()}
-            </thead>
-            <tbody>
-              {renderRegisteredCourses()}
-            </tbody>
-          </table>
-      </div>
-
-      {/************ Footer *************/}
-      <footer className='footer'>
+      <footer className="footer">
         <p>Site made by Fahad © {new Date().getFullYear()}</p>
       </footer>
-    </div>
+    </div>  
   );  
 }
 
